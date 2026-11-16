@@ -22,6 +22,7 @@ module HHLO.EDSL.Ops
     , exponential
     , logarithm
     , tanh
+    , atan2
     , erf
     , sqrt
     , rsqrt
@@ -154,7 +155,7 @@ module HHLO.EDSL.Ops
     , customVJP1
     ) where
 
-import Prelude hiding (subtract, negate, maximum, minimum, abs, compare, map, tanh, sqrt, sin, cos, tan, floor, ceiling)
+import Prelude hiding (subtract, negate, maximum, minimum, abs, compare, map, tanh, atan2, sqrt, sin, cos, tan, floor, ceiling)
 
 import Control.Monad (when)
 import Data.Int (Int64, Int32)
@@ -407,6 +408,13 @@ tanh :: forall s d. (KnownShape s, KnownDType d) => Tensor s d -> Builder (Tenso
 tanh (Tensor x) = do
     let ttype = tensorType (Proxy @s) (Proxy @d)
     vid <- emitOp "stablehlo.tanh" [x] [ttype] [] ttype
+    return (Tensor vid)
+
+atan2 :: forall s1 s2 d1 d2. (s1 ~ s2, d1 ~ d2, KnownShape s1, KnownDType d1)
+       => Tensor s1 d1 -> Tensor s2 d2 -> Builder (Tensor s1 d1)
+atan2 (Tensor x) (Tensor y) = do
+    let ttype = tensorType (Proxy @s1) (Proxy @d1)
+    vid <- emitOp "stablehlo.atan2" [x, y] [ttype, ttype] [] ttype
     return (Tensor vid)
 
 erf :: forall s d. (KnownShape s, KnownDType d) => Tensor s d -> Builder (Tensor s d)
