@@ -37,6 +37,8 @@ import Data.Word (Word8, Word16, Word32, Word64)
 import Data.Text (Text)
 import qualified Data.Vector.Sized as VS
 
+import qualified Data.Complex as ℂ
+
 
 -- | Supported element types for tensors.
 data DType
@@ -95,6 +97,7 @@ type family HostType (d :: DType) :: Type where
     HostType 'UI32 = Word32
     HostType 'UI64 = Word64
     HostType 'Bool = Word8
+    HostType ('Complex a)  = ℂ.Complex (HostType a)
 
 -- ---------------------------------------------------------------------------
 -- Fixed-length configuration vectors

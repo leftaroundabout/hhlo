@@ -208,6 +208,8 @@ bufferTypeForDType UI16 = bufferTypeU16
 bufferTypeForDType UI32 = bufferTypeU32
 bufferTypeForDType UI64 = bufferTypeU64
 bufferTypeForDType Bool = bufferTypePred
+bufferTypeForDType (Complex F32) = bufferTypeC64
+bufferTypeForDType (Complex F64) = bufferTypeC128
 bufferTypeForDType dt   = error $ "bufferTypeForDType: unsupported dtype " ++ show dt
 
 -- | Upload a typed vector to the session's device.

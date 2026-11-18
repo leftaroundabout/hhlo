@@ -584,3 +584,6 @@ instance KnownDType 'UI16 where dtypeVal _ = UI16
 instance KnownDType 'UI32 where dtypeVal _ = UI32
 instance KnownDType 'UI64 where dtypeVal _ = UI64
 instance KnownDType 'Bool where dtypeVal _ = Bool
+
+instance KnownDType ('Complex 'F32)  where dtypeVal _ = Complex F32
+instance KnownDType ('Complex 'F64)  where dtypeVal _ = Complex F64
